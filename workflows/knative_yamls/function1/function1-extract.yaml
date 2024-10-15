@@ -2,15 +2,15 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   namespace: airflow
-  name: airflow-worker-benchmark-w1-d8-stage-01
+  name: airflow-worker-function1-extract
   annotations:
-    dag_id: benchmark_w1_d8
-    task_id: stage_01
+    dag_id: function1
+    task_id: extract
 spec:
   template:
     spec:
       containers:
-        - image: "nehalem90/airflow-worker:latest"
+        - image: "notanaddict/airflow-worker:latest"
           imagePullPolicy: Always
           ports:
             - name: h2c
@@ -21,9 +21,9 @@ spec:
             - name: AIRFLOW_IS_K8S_EXECUTOR_POD
               value: "True"
             - name: AIRFLOW_DAG_ID
-              value: benchmark_w1_d8
+              value: function1
             - name: AIRFLOW_TASK_ID
-              value: stage_01
+              value: extract
             # Hard Coded Airflow Envs
             - name: AIRFLOW__CORE__FERNET_KEY
               valueFrom:

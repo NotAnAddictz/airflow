@@ -21,17 +21,12 @@ def timing(f):
     start_date=pendulum.datetime(2021, 1, 1, tz="UTC"),
     catchup=False,
     is_paused_upon_creation=False)
-def benchmark_w8_d3():
+def function1():
     @task
     @timing
     def extract():
         # dummy data source
-        return [10] * 8
-
-    @task
-    @timing
-    def stage_00(x: int):
-        return x + x
+        return [10] * 10
 
     @task
     @timing
@@ -40,8 +35,7 @@ def benchmark_w8_d3():
 
     # specify data flow
     intermediate_00 = extract()
-    intermediate_01 = stage_00.expand(x=intermediate_00)
-    do_sum(intermediate_01)
+    do_sum(intermediate_00)
 
 # execute dag
-etl_dag = benchmark_w8_d3()
+etl_dag = function1()
